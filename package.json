@@ -1,6 +1,6 @@
 {
   "name": "netlify-plugin-deploy-build-artifacts-s3",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Netlify Build plugin to deploy artifacts from a previous build that were uploaded to S3",
   "type": "module",
   "exports": "./src/index.js",
