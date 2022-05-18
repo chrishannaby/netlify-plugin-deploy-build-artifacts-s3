@@ -60,8 +60,8 @@ export const onBuild = async function ({
   const BUILD_ID = process.env.INCOMING_HOOK_BODY
   const key = `${BUILD_ID}.tgz`
   await downloadFromS3(key)
-  run.command('ls -la')
-  run.command(`mkdir ${PUBLISH_DIR}`)
-  run.command(`tar --strip-components 1 -vxzf ${key} -C ${PUBLISH_DIR}`)
+  await run.command('ls -la')
+  await run.command(`mkdir ${PUBLISH_DIR}`)
+  await run.command(`tar --strip-components 1 -vxzf ${key} -C ${PUBLISH_DIR}`)
   await unlink(key)
 }
