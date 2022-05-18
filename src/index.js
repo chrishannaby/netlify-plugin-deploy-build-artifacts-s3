@@ -45,6 +45,7 @@ function downloadFromS3(key) {
 }
 
 export const onPreBuild = function ({ utils: { build } }) {
+  console.log(process.env.INCOMING_HOOK_BODY)
   if (!process.env.INCOMING_HOOK_BODY) {
     build.cancelBuild('No version payload received')
   }
