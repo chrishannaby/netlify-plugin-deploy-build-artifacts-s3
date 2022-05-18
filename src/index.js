@@ -53,7 +53,7 @@ export const onPreBuild = function ({ utils: { build } }) {
   }
 }
 
-export const onSuccess = async function ({
+export const onBuild = async function ({
   constants: { PUBLISH_DIR },
   utils: { run },
 }) {
