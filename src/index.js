@@ -45,9 +45,11 @@ function downloadFromS3(key) {
 }
 
 export const onPreBuild = function ({ utils: { build } }) {
-  console.log(process.env.INCOMING_HOOK_BODY)
+  if (missingVar()) {
+    build.cancelBuild('Required env var is missing (see logs for details)')
+  }
   if (!process.env.INCOMING_HOOK_BODY) {
-    build.cancelBuild('No version payload received')
+    build.cancelBuild('No version payload received from build hook')
   }
 }
 
@@ -55,8 +57,8 @@ export const onSuccess = async function ({
   constants: { PUBLISH_DIR },
   utils: { run },
 }) {
-  if (missingVar()) return
-  const key = '8ef315a8a10bb6bc3f8541590169b30b9c23d197.tgz'
+  const BUILD_ID = process.env.INCOMING_HOOK_BODY
+  const key = `${BUILD_ID}.tgz`
   await downloadFromS3(key)
   run.command(`mkdir -f ${PUBLISH_DIR}`)
   run.command(`tar --strip-components 1 -vxzf ${key} -C ${PUBLISH_DIR}`)
