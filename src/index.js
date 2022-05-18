@@ -44,19 +44,16 @@ function downloadFromS3(key) {
   })
 }
 
-export const onPreBuild = function ({ utils: { build } }) {
+export const onPreBuild = async function ({
+  utils: { build, run },
+  constants: { PUBLISH_DIR },
+}) {
   if (missingVar()) {
     build.cancelBuild('Required env var is missing (see logs for details)')
   }
   if (!process.env.INCOMING_HOOK_BODY) {
     build.cancelBuild('No version payload received from build hook')
   }
-}
-
-export const onBuild = async function ({
-  constants: { PUBLISH_DIR },
-  utils: { run },
-}) {
   const BUILD_ID = process.env.INCOMING_HOOK_BODY
   const key = `${BUILD_ID}.tgz`
   await downloadFromS3(key)
