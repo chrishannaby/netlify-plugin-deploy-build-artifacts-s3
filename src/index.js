@@ -62,6 +62,6 @@ export const onBuild = async function ({
   await downloadFromS3(key)
   await run.command('ls -la')
   await run.command(`mkdir ${PUBLISH_DIR}`)
-  await run.command(`tar --strip-components 1 -vxzf ${key} -C ${PUBLISH_DIR}`)
+  await run.command(`tar -vxzf ${key} -C ${PUBLISH_DIR}`)
   await unlink(key)
 }
